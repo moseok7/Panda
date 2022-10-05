@@ -40,4 +40,7 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
+	<!-- scan -->
+	<mybatis-spring:scan base-package="com.panda.mapper" />
+	
 </beans>
