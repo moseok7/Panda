@@ -5,7 +5,6 @@
 <configuration>
 
   <typeAliases>
-    <package name="com.panda.controller"/>    
   </typeAliases>
 
 </configuration>
