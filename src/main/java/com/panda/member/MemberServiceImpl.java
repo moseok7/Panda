@@ -17,10 +17,11 @@ public class MemberServiceImpl implements MemberService {
 		membermapper.register(member);
 	}
 
+	/* 아이디 중복 검사 */
 	@Override
-	public MemberVO login(MemberVO member) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public int idCheck(String memberId) throws Exception {
+		
+		return membermapper.idCheck(memberId);
 	}
 
 }
