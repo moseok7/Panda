@@ -34,6 +34,20 @@ span{
     padding: 30px;
     margin: 50px 0;
 }
+
+/* 중복아이디 존재하지 않는경우 */
+.memberId_re1{
+	color : green;
+	display : none;
+}
+/* 중복아이디 존재하는 경우 */
+.memberId_re2{
+	color : red;
+	display : none;
+}
+.form-group1{
+	margin-bottom: 8px;
+} 
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -48,21 +62,23 @@ span{
       <div class="col-md-6 col-md-offset-3">
         <div class="block text-center">
           <h2 class="text-center">계정을 만드세요</h2>
-          <form action="submitSignUp.do" method="post" class="text-left clearfix" id="submitSignUp" name="submitSignUp" >
+          <form method="post" class="text-left clearfix" id="register_form">
+            <div class="form-group1">
+              <input type="text" name="memberId" id="memberId_re" class="form-control"  placeholder="아이디">
+            </div>
+            <span class = "memberId_re1">사용 가능한 아이디 입니다.</span>
+            <span class = "memberId_re2">아이디가 이미 존재합니다.</span>
             <div class="form-group">
-              <input type="text" name="mId" id="mId" class="form-control"  placeholder="ID">
+              <input type="password" name="memberPw" id="memberPw" class="form-control"  placeholder="비밀번호">
             </div>
             <div class="form-group">
-              <input type="password" name="pw" id="pw" class="form-control"  placeholder="비밀번호">
+              <input type="password" id="memberPw2" class="form-control"  placeholder="비밀번호 확인">
             </div>
             <div class="form-group">
-              <input type="password" id="pw2" class="form-control"  placeholder="비밀번호 확인">
+              <input type="text" name="memberName" class="form-control"  placeholder="이름">
             </div>
             <div class="form-group">
-              <input type="text" name="mName" class="form-control"  placeholder="이름">
-            </div>
-            <div class="form-group">
-			<input type="email" name="email" id="email" class="form-control"  placeholder="이메일" >                
+			<input type="email" name="memberEmail" id="memberEmail" class="form-control"  placeholder="이메일" >                
 			<button type="button" class="gradient-btn">확인 내용</button>
               <span id="emailCheckText">이메일 중복확인이 필요합니다.</span>   
             </div>
@@ -72,20 +88,20 @@ span{
               <span id="codeCheckText">이메일 본인 인증이 필요합니다. 본인 확인 버튼을 클릭하세요.</span>   
             </div>
             <div class="form-group">
-              <input type="text" name="address" class="form-control"  placeholder="주소">
+              <input type="text" name="memberAddress1" class="form-control"  placeholder="주소">
             </div>
             <div class="form-group">
-              <input type="text" name="address" class="form-control"  placeholder="주소">
+              <input type="text" name="memberAddress2" class="form-control"  placeholder="주소">
             </div>
             <div class="form-group">
-              <input type="text" name="address" class="form-control"  placeholder="주소">
+              <input type="text" name="memberAddress3" class="form-control"  placeholder="주소">
               <button type="button" class="gradient-btn">확인 내용</button>
             </div>
             <input type="hidden" name="isUniqueId" value="false">
             <input type="hidden" name="isUniqueEmail" value="false">
             <br>
             <div class="text-center">
-              <button type="button" class="btn btn-main text-center" onclick="checkSignupForm();">회원가입</button>
+              <input type="button" id="register_button" class="btn btn-main text-center" value ="회원가입">
             </div>
           </form>
           <p class="mt-20">이미 계정이 있으신가요☞<a href="login.do">로그인</a></p>    
@@ -96,6 +112,36 @@ span{
 </section>
 
 <script type="text/javascript">
+
+$(document).ready(function(){
+	//회원가입 버튼(회원가입 기능 작동)
+	$("#register_button").click(function(){
+		$("#register_form").attr("action", "${pageContext.request.contextPath}/member/register")
+		$("#register_form").submit();
+	});
+});
+
+$('#memberId_re').on("propertychange change keyup paste input", function(){
+
+	var memberId = $('#memberId_re').val();			// .memberId_re에 입력되는 값
+	var data = {memberId : memberId}				// '컨트롤에 넘길 데이터 이름' : '데이터(.memberId_re에 입력되는 값)'
+	
+	$.ajax({
+		type : "post",
+		url : "${pageContext.request.contextPath}/member/Idcheck",
+		data : data,
+		success : function(result) {
+			if(result != 'fail'){
+				$('.memberId_re1').css("display","inline-block");
+				$('.memberId_re2').css("display", "none");				
+			} else {
+				$('.memberId_re2').css("display","inline-block");
+				$('.memberId_re1').css("display", "none");				
+			} 
+		}
+	}); // ajax 종료	
+
+});// function 종료
 
 </script>
 
