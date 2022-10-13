@@ -77,16 +77,20 @@ span{
             <div class="form-group">
               <input type="text" name="memberName" class="form-control"  placeholder="이름">
             </div>
+            
             <div class="form-group">
-			<input type="email" name="memberEmail" id="memberEmail" class="form-control"  placeholder="이메일" >                
-			<button type="button" class="gradient-btn">확인 내용</button>
+			<input type="email" name="memberEmail" id="memberEmail_re" class="form-control"  placeholder="이메일" >                
+			
+			<!-- <button type="button" class="gradient-btn">확인 내용</button>
               <span id="emailCheckText">이메일 중복확인이 필요합니다.</span>   
+             -->  
             </div>
+            
             <div class="form-group">
 			<input type="text" id="VerificationCode" class="form-control"  placeholder="인증코드" disabled="disabled">                
-			<button type="button" id="emailSendBtn" class="gradient-btn" disabled="disabled">본인 확인</button>
-              <span id="codeCheckText">이메일 본인 인증이 필요합니다. 본인 확인 버튼을 클릭하세요.</span>   
+			<input type="button" id="emailSendBtn" class="gradient-btn" value = "본인확인">
             </div>
+            
             <div class="form-group">
               <input type="text" name="memberAddress1" class="form-control"  placeholder="주소">
             </div>
@@ -142,6 +146,28 @@ $('#memberId_re').on("propertychange change keyup paste input", function(){
 	}); // ajax 종료	
 
 });// function 종료
+
+
+$('#emailSendBtn').click(function(){
+	
+	var email = $('#memberEmail_re').val(); // 이메일
+	
+	$.ajax({
+		
+		type: "GET",
+        url: "${pageContext.request.contextPath}/member/mailCheck?email=" + email,
+		success: function(data){
+			
+			console.log("data : " + data);
+		}
+        		
+        		
+	});
+	
+});
+
+
+
 
 </script>
 

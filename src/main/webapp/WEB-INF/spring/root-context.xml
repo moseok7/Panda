@@ -12,14 +12,15 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
-	
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	
+
 	<!-- HikariCP configuration -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> 
 			<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:XE"></property> -->
-		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="driverClassName"
+			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<property name="jdbcUrl"
 			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"></property>
 		<property name="username" value="PANDA"></property>
@@ -30,17 +31,45 @@
 		<constructor-arg ref="hikariConfig" />
 	</bean>
 
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
-		<property name="mapperLocations" value="classpath:mapper/**/*Mapper.xml"></property>
+		<property name="configLocation"
+			value="classpath:/mybatis-config.xml"></property>
+		<property name="mapperLocations"
+			value="classpath:mapper/**/*Mapper.xml"></property>
 	</bean>
-	
-	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
-		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate"
+		destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory"
+			ref="sqlSessionFactory"></constructor-arg>
 	</bean>
-	
+
+	<!-- gmail설정 -->
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="pandaKh361@gmail.com" /> <!-- 자신의 이메일 아이디 -->
+		<property name="password" value="arvdtnzadsmwvsyr" /> <!-- 자신의 비밀번호 -->
+		<!-- 보안연결 SSL설정 -->
+		<property name="javaMailProperties">
+			<props>
+				 <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.debug">true</prop>
+                <prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+			</props> 
+		</property>
+	</bean>
+
 	<!-- scan -->
-	<mybatis-spring:scan base-package="com.panda.mapper" />
-	
+	<mybatis-spring:scan
+		base-package="com.panda.mapper" />
+
 </beans>
