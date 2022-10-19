@@ -3,6 +3,7 @@ package com.panda.member;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = "/member")
@@ -96,5 +98,24 @@ public class MemberController {
 		return num;
 
 	}
+	
+	// 로그인 처리 Get
+	@RequestMapping(value="/login", method = RequestMethod.GET)
+	public void loginGET() {
+		
+		logger.info("로그인 페이지 진입");
+		
+	}
+	
+	// 로그인 처리 Post
+    @RequestMapping(value="login", method=RequestMethod.POST)
+    public String loginPOST(HttpServletRequest request, MemberVO member, RedirectAttributes rttr) throws Exception{
+        
+        System.out.println("login 메서드 진입");
+        System.out.println("전달된 데이터 : " + member);
+        
+        return null;
+    }
+	
 
 }

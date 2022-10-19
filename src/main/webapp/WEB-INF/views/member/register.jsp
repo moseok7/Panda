@@ -128,6 +128,7 @@ span{
 			<input type="email" name="memberEmail" id="memberEmail_re" class="form-control"  placeholder="이메일" >                
             </div>
             <span class="final_mail_ck">이메일을 입력해주세요.</span>
+            <span class="email_warn"></span>
             
             <div class="form-group">
 			<input type="text" id="VerificationCode" class="form-control"  placeholder="인증코드" disabled="disabled">                
@@ -282,11 +283,23 @@ $('#memberId_re').on("propertychange change keyup paste input", function(){
 
 });// function 종료
 
-
+// 이메일 전송 버튼
 $('#emailSendBtn').click(function(){
 	
 	var email = $('#memberEmail_re').val(); // 이메일
 	var checkBox = $('#VerificationCode');
+	var warnMsg = $(".email_warn");    // 이메일 입력 경고글
+	
+	/* 이메일 형식 유효성 검사 */
+    if(mailFormCheck(email)){
+        warnMsg.html("이메일이 전송 되었습니다. 이메일을 확인해주세요.");
+        warnMsg.css("display", "inline-block");
+    } else {
+        warnMsg.html("올바르지 못한 이메일 형식입니다.");
+        warnMsg.css("display", "inline-block");
+        return false;
+    }    
+	
 	
 	$.ajax({
 		
@@ -395,7 +408,13 @@ $('#memberPw_re2').on("propertychange change keyup paste input", function(){
     
 });  
 
+/* 입력 이메일 형식 유효성 검사 */
+function mailFormCheck(email){
 
+	 var form = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+	
+	 return form.test(email);
+}
 
 </script>
 
