@@ -7,7 +7,7 @@
   <!-- Basic Page Needs
   ================================================== -->
   <meta charset="utf-8">
-  <title>밀슐랭 | 회원가입</title>
+  <title>회원가입</title>
   
 <style>
 .gradient-btn{
