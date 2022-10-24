@@ -32,6 +32,7 @@
 <!-- 부가적인 테마 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 	<!-- Navigation-->
@@ -45,6 +46,8 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			 <!-- 로그인한 상태 -->
+			<c:if test="${member != null }">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="#!">Home</a></li>
@@ -59,6 +62,7 @@
 							<li><a class="dropdown-item" href="#!">New Arrivals</a></li>
 						</ul></li>
 				</ul>
+			</c:if>	
 				<ul class="d-flex">
 					<li class="btn btn-outline-dark"><i class="bi-cart-fill me-1"></i>
 						Cart <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
@@ -66,16 +70,38 @@
 					<!-- 로그인 하지 않은 상태 -->
               		 <c:if test = "${member == null }">
 					<li class="btn btn-outline-dark"><a
-						href="<%=request.getContextPath()%>/member/login">Login</a></li>
+						href="<%=request.getContextPath()%>/member/login">로그인</a></li>
 					<li class="btn btn-outline-dark"><a
-						href="<%=request.getContextPath()%>/member/register">register</a></li>
+						href="<%=request.getContextPath()%>/member/register">회원가입</a></li>
 					</c:if>
 					 <!-- 로그인한 상태 -->
-             		   <c:if test="${ member != null }">
+             		<c:if test="${ member != null }">
             			<span>회원 : ${member.memberName}</span>
-               			 </c:if>
+            			<li class="btn btn-outline-dark">
+            				<a id="logout_button">로그아웃</a></li>
+            					<c:if test ="${member.memberLevel == 1 }">
+            					<li class="btn btn-outline-dark"><a
+									href="<%=request.getContextPath()%>/admin/main">관리자 페이지</a></li>
+               					</c:if>
+               		</c:if>	
 				</ul>
 			</div>
 		</div>
 	</nav>
-	
+
+<script>
+ 
+    /* 로그아웃 버튼 작동 */
+    $("#logout_button").click(function(){
+    	//alert("버튼 작동");
+        $.ajax({
+            type:"POST",
+            url:"${pageContext.request.contextPath}/member/logout",
+            success:function(data){
+                alert("로그아웃 성공");
+                document.location.reload();     
+            } 
+        }); // ajax 
+    });
+    
+</script>
