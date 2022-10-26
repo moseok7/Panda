@@ -38,7 +38,24 @@
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="#!">옷 판다</a>
+			<%-- <a class="navbar-brand" href="<%=request.getContextPath()%>/">옷 판다</a> --%>
+			<a href="<%=request.getContextPath()%>/"> <!-- replace logo here -->
+							<svg width="135px" height="37px" viewBox="0 0 155 29"
+								version="1.1" xmlns="http://www.w3.org/2000/svg"
+								xmlns:xlink="http://www.w3.org/1999/xlink">
+							<g id="Page-1" stroke="none" stroke-width="1" fill="none"
+									fill-rule="evenodd" font-size="40"
+									font-family="AustinBold, Austin" font-weight="bold">
+								<g id="Group" transform="translate(-108.000000, -297.000000)"
+									fill="#000000">
+
+									<text id="AVIATO">
+										<tspan x="108.94" y="325">옷 판다</tspan>
+									</text>
+								</g>
+							</g>
+						</svg>
+						</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -76,7 +93,7 @@
 					</c:if>
 					 <!-- 로그인한 상태 -->
              		<c:if test="${ member != null }">
-            			<span>회원 : ${member.memberName}</span>
+            			<li>회원 : ${member.memberName}</li>
             			<li class="btn btn-outline-dark">
             				<a id="logout_button">로그아웃</a></li>
             					<c:if test ="${member.memberLevel == 1 }">

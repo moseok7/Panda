@@ -58,7 +58,7 @@
 								<input type="button" id="login_button" class="btn btn-main text-center" value="로그인">
 							</div>
 						</form>
-						<p class="mt-20">밀슐랭이 처음이세요☞<a href="signUp.do">회원가입</a></p>
+						<p class="mt-20">처음이세요☞<a href="<%=request.getContextPath()%>/member/register">회원가입</a></p>
 						<p class="mt-20">비밀번호를 잊으셨나요☞<a href="forgetPwd.do">비밀번호 찾기</a></p>
 					</div>
 				</div>
